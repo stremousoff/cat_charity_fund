@@ -23,7 +23,9 @@ class CRUDBase:
         return (
             (
                 await session.execute(
-                    select(self.model).where(self.model.fully_invested == 0).order_by(asc("create_date"))
+                    select(self.model)
+                    .where(self.model.fully_invested == 0)
+                    .order_by(asc("create_date"))
                 )
             )
             .scalars()

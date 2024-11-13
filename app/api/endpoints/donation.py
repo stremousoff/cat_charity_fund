@@ -9,8 +9,11 @@ from app.crud.charity_project import charity_crud
 from app.crud.donation import donation_crud
 
 from app.models import User, Donation
-from app.schemas.donation import DonationDBShort, DonationDBFull, \
-    DonationCreate
+from app.schemas.donation import (
+    DonationDBShort,
+    DonationDBFull,
+    DonationCreate,
+)
 from app.services.investments import run_investments
 
 router = APIRouter()
@@ -50,4 +53,3 @@ async def create_donation(
         session.add_all(invested)
     await donation_crud.push_to_db(donation, session)
     return donation
-
