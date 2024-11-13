@@ -1,12 +1,16 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, Boolean, DateTime
+from sqlalchemy import Column, Integer, Boolean, DateTime, CheckConstraint
 
 from app.core.base import Base
 
 
 class Investment(Base):
     __abstract__ = True
+    __table_args__ = (
+        CheckConstraint("full_amount > 0"),
+        CheckConstraint("invested_amount <= full_amount"),
+    )
 
     full_amount = Column(Integer)
     invested_amount = Column(Integer, default=0)

@@ -1,4 +1,6 @@
-from pydantic import BaseSettings
+from typing import Optional
+
+from pydantic import BaseSettings, EmailStr
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
@@ -9,10 +11,11 @@ class Settings(BaseSettings):
     app_version: str
     database_url: str = "sqlite+aiosqlite:///./fastapi.db"
     secret: str = "secret"
+    first_superuser_email: Optional[EmailStr] = None
+    first_superuser_password: Optional[str] = None
 
     class Config:
         env_file = ".env"
-        env_file_encoding = "utf-8"
 
 
 settings = Settings()

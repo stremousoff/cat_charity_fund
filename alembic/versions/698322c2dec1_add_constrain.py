@@ -1,8 +1,8 @@
-"""Initial structure
+"""add_constrain
 
-Revision ID: 67245feacb7b
+Revision ID: 698322c2dec1
 Revises: 
-Create Date: 2024-11-13 17:52:58.759073+04:00
+Create Date: 2024-11-13 23:16:29.736502+04:00
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '67245feacb7b'
+revision = '698322c2dec1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,6 +27,7 @@ def upgrade():
     sa.Column('close_date', sa.DateTime(), nullable=True),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('description', sa.Text(), nullable=False),
+    sa.CheckConstraint("TRIM(name) != ''", name='non_empty_name'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
@@ -49,6 +50,8 @@ def upgrade():
     sa.Column('close_date', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('comment', sa.Text(), nullable=True),
+    sa.CheckConstraint('full_amount > 0'),
+    sa.CheckConstraint('invested_amount <= full_amount'),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
