@@ -57,15 +57,12 @@ class CRUDBase:
         await session.commit()
         return db_object
 
-    @staticmethod
-    async def patch(db_obj, obj_in, session):
+    @classmethod
+    async def patch(cls, db_obj, obj_in, session):
         update_data = obj_in.dict(exclude_unset=True)
         for field in update_data:
             setattr(db_obj, field, update_data[field])
         if db_obj.full_amount == db_obj.invested_amount:
             db_obj.fully_invested = True
             db_obj.close_date = datetime.now()
-        session.add(db_obj)
-        await session.commit()
-        await session.refresh(db_obj)
-        return db_obj
+        return await cls.push_to_db(db_obj, session)
