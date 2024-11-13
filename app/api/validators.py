@@ -27,7 +27,9 @@ async def check_update_data(
     if db_project is None:
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND,
-            detail=ValidationError.CHARITY_PROJECT_BY_ID_NOT_FOUND,
+            detail=ValidationError.CHARITY_PROJECT_BY_ID_NOT_FOUND.format(
+                project_id
+            ),
         )
     if db_project.fully_invested:
         raise HTTPException(

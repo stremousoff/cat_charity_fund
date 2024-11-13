@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, Boolean, DateTime, CheckConstraint
 
 from app.core.base import Base
+from app.core.constans import INVEST_AMOUNT_DEFAULT
 
 
 class Investment(Base):
@@ -13,7 +14,7 @@ class Investment(Base):
     )
 
     full_amount = Column(Integer)
-    invested_amount = Column(Integer, default=0)
+    invested_amount = Column(Integer, default=INVEST_AMOUNT_DEFAULT)
     fully_invested = Column(Boolean, default=False)
     create_date = Column(DateTime, default=datetime.now)
     close_date = Column(DateTime)

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import select, asc
 
 
@@ -44,7 +46,7 @@ class CRUDBase:
         return creat_obj_for_db
 
     @staticmethod
-    async def push_to_db(project, session) -> None:
+    async def push_to_db(project, session):
         await session.commit()
         await session.refresh(project)
         return project
@@ -60,6 +62,9 @@ class CRUDBase:
         update_data = obj_in.dict(exclude_unset=True)
         for field in update_data:
             setattr(db_obj, field, update_data[field])
+        if db_obj.full_amount == db_obj.invested_amount:
+            db_obj.fully_invested = True
+            db_obj.close_date = datetime.now()
         session.add(db_obj)
         await session.commit()
         await session.refresh(db_obj)

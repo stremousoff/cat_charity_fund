@@ -65,7 +65,7 @@ async def partial_update_project(
 ) -> CharityProject:
     project_db = await check_update_data(project_id, project_data, session)
     project_db = await charity_crud.patch(project_db, project_data, session)
-    charity_crud.push_to_db(project_db, session)
+    await charity_crud .push_to_db(project_db, session)
     return project_db
 
 
