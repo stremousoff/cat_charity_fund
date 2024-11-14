@@ -17,3 +17,13 @@ class CharityProject(Investment):
             "TRIM(name) != ''", name=ValidationError.NAME_REQUIRED
         ),
     )
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__name__}("
+            f"id={self.id}, "
+            f"name={self.name}, "
+            f"fully_invested={self.fully_invested}, "
+            f"invested_amount={self.invested_amount}, "
+            f"create_date={self.create_date}, "
+        )

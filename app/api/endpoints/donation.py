@@ -1,9 +1,7 @@
-from typing import Optional
-
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import get_async_session
+from app.core.db import get_async_session
 from app.core.user import current_user, current_superuser
 from app.crud.charity_project import charity_crud
 from app.crud.donation import donation_crud
