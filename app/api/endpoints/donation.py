@@ -12,7 +12,7 @@ from app.schemas.donation import (
     DonationDBFull,
     DonationCreate,
 )
-from app.services.investments import run_investments
+from app.services.investments import make_investments
 
 router = APIRouter()
 
@@ -47,7 +47,7 @@ async def create_donation(
     donation = await donation_crud.create(donation, session, user)
     unclosed_projects = await charity_crud.get_all_objects_is_unclosed(session)
     if unclosed_projects:
-        invested = run_investments(donation, unclosed_projects)
+        invested = make_investments(donation, unclosed_projects)
         session.add_all(invested)
-    await donation_crud.push_to_db(donation, session)
+    await donation_crud.push_to_db_data(donation, session)
     return donation

@@ -16,7 +16,7 @@ from app.schemas.charity_project import (
     CharityProjectCreate,
     CharityProjectUpdate,
 )
-from app.services.investments import run_investments
+from app.services.investments import make_investments
 
 router = APIRouter()
 
@@ -47,9 +47,9 @@ async def create_charity_project(
         session
     )
     if unclosed_donations:
-        invested = run_investments(new_charity_project, unclosed_donations)
+        invested = make_investments(new_charity_project, unclosed_donations)
         session.add_all(invested)
-    await charity_crud.push_to_db(new_charity_project, session)
+    await charity_crud.push_to_db_data(new_charity_project, session)
     return new_charity_project
 
 
@@ -65,7 +65,7 @@ async def partial_update_project(
 ) -> CharityProject:
     project_db = await check_update_data(project_id, project_data, session)
     project_db = await charity_crud.patch(project_db, project_data, session)
-    await charity_crud .push_to_db(project_db, session)
+    await charity_crud.push_to_db_data(project_db, session)
     return project_db
 
 
