@@ -58,7 +58,7 @@ async def create_charity_project(
     response_model=CharityProjectDB,
     dependencies=[Depends(current_superuser)],
 )
-async def partial_update_project(
+async def partial_update_charity_project(
     project_id: int,
     project_data: CharityProjectUpdate,
     session: AsyncSession = Depends(get_async_session),
@@ -74,7 +74,7 @@ async def partial_update_project(
     dependencies=[Depends(current_superuser)],
     response_model=CharityProjectDB,
 )
-async def delete_project(
+async def delete_charity_project(
     project_id: int,
     session: AsyncSession = Depends(get_async_session),
 ) -> CharityProject:
