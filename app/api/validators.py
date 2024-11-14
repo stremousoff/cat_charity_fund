@@ -22,7 +22,7 @@ async def check_name(
 
 async def check_update_data(
     project_id: int, project_data: CharityProjectUpdate, session: AsyncSession
-):
+) -> CharityProject:
     db_project = await charity_crud.get_object(project_id, session)
     if db_project is None:
         raise HTTPException(
