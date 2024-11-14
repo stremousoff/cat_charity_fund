@@ -5,7 +5,6 @@ from pydantic import (
     BaseModel,
     Field,
     PositiveInt,
-    validator,
     Extra,
 )
 from pydantic.types import StrictInt
@@ -27,18 +26,7 @@ class CharityProjectCreate(CharityProjectBase):
 
 
 class CharityProjectUpdate(CharityProjectBase):
-
-    @validator("description")
-    def description_must_not_be_empty(cls, value):
-        if not value.strip():
-            raise ValueError("Описание не может быть пустым")
-        return value
-
-    @validator("name")
-    def name_must_not_be_empty(cls, value):
-        if not value.strip():
-            raise ValueError("Имя проекта не может быть пустым")
-        return value
+    pass
 
 
 class CharityProjectDB(CharityProjectCreate):
