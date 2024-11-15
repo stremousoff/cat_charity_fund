@@ -6,6 +6,8 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declared_attr, sessionmaker
 
+from app.core.config import settings
+
 load_dotenv()
 
 
@@ -19,7 +21,7 @@ class PreBase:
 
 Base = declarative_base(cls=PreBase)
 
-engine = create_async_engine(os.getenv("DATABASE_URL"))
+engine = create_async_engine(settings.database_url)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession)
 
 
