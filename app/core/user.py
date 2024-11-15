@@ -47,9 +47,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
         user: Union[UserCreate, User],
     ) -> None:
         if len(password) < 3:
-            raise InvalidPasswordException(
-                reason=UserMessages.PASSWORD_ERROR
-            )
+            raise InvalidPasswordException(reason=UserMessages.PASSWORD_ERROR)
         if user.email in password:
             raise InvalidPasswordException(
                 reason=UserMessages.PASSWORD_NOT_CONTAIN_EMAIL

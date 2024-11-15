@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
@@ -40,7 +40,9 @@ async def get_current_user_donations(
     "/", response_model=DonationDBShort, response_model_exclude_none=True
 )
 async def create_donation(
-    donation: DonationCreate,
+    donation: DonationCreate = Body(
+        example=DonationCreate.Config.schema_extra["example"]
+    ),
     user: User = Depends(current_user),
     session: AsyncSession = Depends(get_async_session),
 ) -> Donation:

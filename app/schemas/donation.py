@@ -13,7 +13,13 @@ class DonationBase(BaseModel):
 
 
 class DonationCreate(DonationBase):
-    pass
+    class Config:
+        schema_extra = {
+            "example": {
+                "full_amount": 100,
+                "comment": "На пиво",
+            }
+        }
 
 
 class DonationDBShort(DonationBase):

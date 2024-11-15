@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.validators import (
@@ -38,7 +38,9 @@ async def get_all_charity_projects(
     response_model_exclude_none=True,
 )
 async def create_charity_project(
-    charity_project: CharityProjectCreate,
+    charity_project: CharityProjectCreate = Body(
+        example=CharityProjectCreate.Config.schema_extra["example"]
+    ),
     session: AsyncSession = Depends(get_async_session),
 ) -> CharityProject:
     await check_name(charity_project.name, session)

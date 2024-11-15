@@ -1,23 +1,33 @@
 from datetime import datetime
-
 from app.models.base import Investment
 
 
-def make_investments(
-    investment_object: Investment, sources_investments: list[Investment]
-) -> list[Investment]:
-    change_objects = []
-    for source_investment in sources_investments:
-        required_amount = min(
-            source_investment.full_amount - source_investment.invested_amount,
-            investment_object.full_amount - investment_object.invested_amount,
-        )
-        for changed_object in (source_investment, investment_object):
-            changed_object.invested_amount += required_amount
-            if changed_object.full_amount == changed_object.invested_amount:
-                changed_object.fully_invested = True
-                changed_object.close_date = datetime.now()
-        change_objects.append(changed_object)
-        if investment_object.fully_invested:
-            break
-    return change_objects
+def limit_invested_amount(investment, amount):
+    return min(investment.full_amount, investment.invested_amount + amount)
+
+
+def update_investment(target, source, amount):
+    target.invested_amount = limit_invested_amount(target, amount)
+    source.invested_amount = limit_invested_amount(source, amount)
+    for investment in [target, source]:
+        if investment.invested_amount >= investment.full_amount:
+            investment.fully_invested = True
+            investment.close_date = datetime.now()
+
+
+def make_investments(target, sources):
+    change_object = []
+    for source in sources:
+        available_source_amount = source.full_amount - source.invested_amount
+        required_target_amount = target.full_amount - target.invested_amount
+        if available_source_amount >= required_target_amount:
+            update_investment(target, source, required_target_amount)
+            change_object.append(source)
+            change_object.append(target)
+            return change_object
+        else:
+            update_investment(target, source, available_source_amount)
+            source.close_date = datetime.now()
+            change_object.append(source)
+            continue
+    return change_object
