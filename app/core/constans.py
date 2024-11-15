@@ -1,9 +1,10 @@
-#  Константы для моделей
+# Константы моделей и схем
 MAX_LENGTH_NAME = 100
+MIN_LENGTH_NAME = 1
 INVEST_AMOUNT_DEFAULT = 0
 
 
-# Литералы ошибок
+# Литералы ошибок валидации
 class ValidationError:
     CHARITY_PROJECT_EXISTS = "Проект с таким именем уже существует!"
     CHARITY_PROJECT_BY_ID_NOT_FOUND = "Объект с айди с номером {} не найден."
@@ -17,3 +18,10 @@ class ValidationError:
         "В проект были внесены средства, не подлежит изменению!"
     )
     NAME_REQUIRED = "Поле name обязательно для заполнения."
+
+
+# Литералы ошибок регистрации пользователя
+class UserMessages:
+    PASSWORD_ERROR = "Длина пароля должна быть не менее 8 символов!"
+    PASSWORD_NOT_CONTAIN_EMAIL = "Пароль не должен содержать e-mail!"
+    USER_SUCCESSFULLY_REGISTERED = "Пользователь {} зарегистрирован."

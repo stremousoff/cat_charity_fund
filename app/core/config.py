@@ -9,8 +9,10 @@ class Settings(BaseSettings):
     app_title: str
     app_description: str
     app_version: str
-    database_url: str = "sqlite+aiosqlite:///./fastapi.db"
-    secret: str = "secret"
+    database_url: str = "sqlite+aiosqlite:///./fastapi.db"  # FAILED
+    # tests/test_db.py::test_check_db_url - KeyError: 'default'
+    auth_backend_name: str = "jwt"
+    secret: str
     first_superuser_email: Optional[EmailStr] = None
     first_superuser_password: Optional[str] = None
 

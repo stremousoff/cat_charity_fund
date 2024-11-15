@@ -9,9 +9,13 @@ from pydantic import (
 )
 from pydantic.types import StrictInt
 
+from app.core.constans import MIN_LENGTH_NAME, MAX_LENGTH_NAME
+
 
 class CharityProjectBase(BaseModel):
-    name: Optional[str] = Field(None, min_length=1, max_length=100)
+    name: Optional[str] = Field(
+        None, min_length=MIN_LENGTH_NAME, max_length=MAX_LENGTH_NAME
+    )
     description: Optional[str] = Field(None, min_length=1)
     full_amount: Optional[PositiveInt]
 
@@ -20,8 +24,10 @@ class CharityProjectBase(BaseModel):
 
 
 class CharityProjectCreate(CharityProjectBase):
-    name: str = Field(..., min_length=1, max_length=100)
-    description: str = Field(..., min_length=1)
+    name: str = Field(
+        ..., min_length=MIN_LENGTH_NAME, max_length=MAX_LENGTH_NAME
+    )
+    description: str = Field(..., min_length=MIN_LENGTH_NAME)
     full_amount: PositiveInt
 
 

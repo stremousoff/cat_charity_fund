@@ -16,6 +16,7 @@ from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
+from app.core.constans import UserMessages
 from app.core.db import get_async_session
 from app.models.user import User
 from app.schemas.user import UserCreate
@@ -33,7 +34,7 @@ def get_jwt_strategy() -> JWTStrategy:
 
 
 auth_backend = AuthenticationBackend(
-    name="jwt",  # Произвольное имя бэкенда (должно быть уникальным).
+    settings.auth_backend_name,
     transport=bearer_transport,
     get_strategy=get_jwt_strategy,
 )
@@ -47,17 +48,17 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
     ) -> None:
         if len(password) < 3:
             raise InvalidPasswordException(
-                reason="Password should be at least 3 characters"
+                reason=UserMessages.PASSWORD_ERROR
             )
         if user.email in password:
             raise InvalidPasswordException(
-                reason="Password should not contain e-mail"
+                reason=UserMessages.PASSWORD_NOT_CONTAIN_EMAIL
             )
 
     async def on_after_register(
         self, user: User, request: Optional[Request] = None
     ):
-        print(f"Пользователь {user.email} зарегистрирован.")
+        print(UserMessages.USER_SUCCESSFULLY_REGISTERED.format(user.email))
 
 
 async def get_user_manager(user_db=Depends(get_user_db)):
