@@ -4,6 +4,16 @@ MIN_LENGTH_NAME = 1
 INVEST_AMOUNT_DEFAULT = 0
 
 
+# Константы настроек
+class ConfigConstants:
+    APP_TITLE = "Кошачий благотворительный фонд"
+    APP_DESCRIPTION = "Сервис для поддержки котиков!"
+    APP_VERSION = "0.1.0"
+    DATABASE_URL = "sqlite+aiosqlite:///./fastapi.db"
+    AUTH_BACKEND_NAME = "jwt"
+    SECRET = 'secret'
+
+
 # Литералы ошибок валидации
 class ValidationError:
     CHARITY_PROJECT_EXISTS = "Проект с таким именем уже существует!"

@@ -4,15 +4,16 @@ from pydantic import BaseSettings, EmailStr
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
+from app.core.constans import ConfigConstants
+
 
 class Settings(BaseSettings):
-    app_title: str
-    app_description: str
-    app_version: str
-    database_url: str = "sqlite+aiosqlite:///./fastapi.db"  # FAILED
-    # tests/test_db.py::test_check_db_url - KeyError: 'default'
-    auth_backend_name: str = "jwt"
-    secret: str
+    app_title: str = ConfigConstants.APP_TITLE
+    app_description: str = ConfigConstants.APP_DESCRIPTION
+    app_version: str = ConfigConstants.APP_VERSION
+    database_url: str = ConfigConstants.DATABASE_URL
+    auth_backend_name: str = ConfigConstants.AUTH_BACKEND_NAME
+    secret: str = ConfigConstants.SECRET
     first_superuser_email: Optional[EmailStr] = None
     first_superuser_password: Optional[str] = None
 
