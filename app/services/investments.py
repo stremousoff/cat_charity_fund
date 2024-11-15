@@ -1,12 +1,15 @@
 from datetime import datetime
+
 from app.models.base import Investment
 
 
-def limit_invested_amount(investment, amount):
+def limit_invested_amount(investment: Investment, amount: int) -> int:
     return min(investment.full_amount, investment.invested_amount + amount)
 
 
-def update_investment(target, source, amount):
+def update_investment(
+    target: Investment, source: Investment, amount: int
+) -> None:
     target.invested_amount = limit_invested_amount(target, amount)
     source.invested_amount = limit_invested_amount(source, amount)
     for investment in [target, source]:
@@ -15,7 +18,9 @@ def update_investment(target, source, amount):
             investment.close_date = datetime.now()
 
 
-def make_investments(target, sources):
+def make_investments(
+    target: Investment, sources: list[Investment]
+) -> list[Investment]:
     change_object = []
     for source in sources:
         available_source_amount = source.full_amount - source.invested_amount
