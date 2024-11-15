@@ -3,9 +3,7 @@ from datetime import datetime
 from app.models.base import Investment
 
 
-def make_investments(
-    target: Investment, sources: list[Investment]
-) -> list[Investment]:
+def run_investments(target, sources):
     _object = []
     for source in sources:
         investment_amount = min(

@@ -27,6 +27,7 @@ class CharityProjectCreate(CharityProjectBase):
     name: str = Field(min_length=MIN_LENGTH_NAME, max_length=MAX_LENGTH_NAME)
     description: str = Field(min_length=MIN_LENGTH_NAME)
     full_amount: PositiveInt
+    invested_amount: int = 0
 
     class Config:
         extra = Extra.forbid

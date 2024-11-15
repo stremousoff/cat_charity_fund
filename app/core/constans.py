@@ -11,7 +11,7 @@ class ConfigConstants:
     APP_VERSION = "0.1.0"
     DATABASE_URL = "sqlite+aiosqlite:///./fastapi.db"
     AUTH_BACKEND_NAME = "jwt"
-    SECRET = 'secret'
+    SECRET = "secret"
 
 
 # Литералы ошибок валидации

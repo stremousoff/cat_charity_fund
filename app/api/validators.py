@@ -36,8 +36,10 @@ async def check_update_data(
             status_code=HTTPStatus.BAD_REQUEST,
             detail=ValidationError.DONT_CHANGE_PROJECT_IF_INVEST_EXIST,
         )
-    if (project_data.full_amount and
-            project_data.full_amount < db_project.invested_amount):
+    if (
+        project_data.full_amount
+        and project_data.full_amount < db_project.invested_amount
+    ):
         raise HTTPException(
             HTTPStatus.BAD_REQUEST, ValidationError.CHARITY_FULL_AMOUNT_ERROR
         )

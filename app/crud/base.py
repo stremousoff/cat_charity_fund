@@ -52,25 +52,13 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         obj_in: CreateSchemaType,
         session: AsyncSession,
         user: Optional[ModelType] = None,
-        skip_commit: bool = False,
     ) -> ModelType:
         obj_in_data = obj_in.dict()
         if user is not None:
             obj_in_data["user_id"] = user.id
         creat_obj_for_db = self.model(**obj_in_data)
         session.add(creat_obj_for_db)
-        if not skip_commit:
-            await session.commit()
-            await session.refresh(creat_obj_for_db)
         return creat_obj_for_db
-
-    @staticmethod
-    async def push_to_db_data(
-        project: ModelType, session: AsyncSession
-    ) -> ModelType:
-        await session.commit()
-        await session.refresh(project)
-        return project
 
     @staticmethod
     async def delete(db_object: ModelType, session: AsyncSession) -> ModelType:
@@ -88,4 +76,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         if db_obj.full_amount == db_obj.invested_amount:
             db_obj.fully_invested = True
             db_obj.close_date = datetime.now()
-        return await cls.push_to_db_data(db_obj, session)
+            await session.commit()
+            await session.refresh(db_obj)
+        return db_obj

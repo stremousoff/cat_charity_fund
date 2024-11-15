@@ -13,7 +13,7 @@ class DonationBase(BaseModel):
 
 class DonationCreate(DonationBase):
     invested_amount: StrictInt = 0
-
+    
     class Config:
         schema_extra = {
             "example": {

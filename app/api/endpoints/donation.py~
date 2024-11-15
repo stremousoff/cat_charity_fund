@@ -51,6 +51,5 @@ async def create_donation(
     if unclosed_projects:
         invested = make_investments(donation, unclosed_projects)
         session.add_all(invested)
-    await session.commit()
-    await session.refresh(donation)
+    await donation_crud.push_to_db_data(donation, session)
     return donation

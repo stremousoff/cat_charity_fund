@@ -19,7 +19,11 @@ class CharityProject(Investment):
     )
 
     def __repr__(self):
-        return super().__repr__() + (
+        return (
+            f"{self.__class__.__name__}("
+            f"id={self.id}, "
             f"name={self.name}, "
-            f"description={self.comment}, "
+            f"fully_invested={self.fully_invested}, "
+            f"invested_amount={self.invested_amount}, "
+            f"create_date={self.create_date}, "
         )
