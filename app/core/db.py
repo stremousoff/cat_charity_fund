@@ -1,5 +1,3 @@
-import os
-
 from dotenv import load_dotenv
 from sqlalchemy import Column, Integer
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
