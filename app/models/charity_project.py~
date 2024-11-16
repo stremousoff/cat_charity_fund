@@ -23,3 +23,4 @@ class CharityProject(Investment):
             f"name={self.name}, "
             f"description={self.comment}"
         )
+
