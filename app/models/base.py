@@ -10,7 +10,10 @@ class Investment(Base):
     __abstract__ = True
     __table_args__ = (
         CheckConstraint("full_amount > 0"),
-        CheckConstraint("0 <= invested_amount <= full_amount"),
+        # так не работает, оставил старый вариант
+        # CheckConstraint("0 <= invested_amount <= full_amount"),
+        CheckConstraint("invested_amount >= 0"),
+        CheckConstraint("invested_amount <= full_amount"),
     )
 
     full_amount = Column(Integer)
