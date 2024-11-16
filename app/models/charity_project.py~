@@ -12,9 +12,9 @@ class CharityProject(Investment):
     )
     description = Column(Text, nullable=False)
 
-    _table_args__ = (
-        CheckConstraint("TRIM(name) != ''",
-                        name=ValidationError.NAME_REQUIRED),
+    __table_args__ = (CheckConstraint(
+        "TRIM(name) != ''", name=ValidationError.NAME_REQUIRED
+    ),
     )
 
     def __repr__(self):
